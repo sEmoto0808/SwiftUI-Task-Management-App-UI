@@ -61,6 +61,13 @@ struct HomePage: View {
                                         }
                                     }
                                 )
+                                .contentShape(Capsule())
+                                .onTapGesture {
+                                    // Updating Current Day
+                                    withAnimation {
+                                        taskViewModel.currentDay = day
+                                    }
+                                }
                             }
                         }
                         .padding(.horizontal)
