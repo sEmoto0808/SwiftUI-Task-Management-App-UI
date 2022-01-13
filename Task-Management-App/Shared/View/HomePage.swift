@@ -36,7 +36,23 @@ struct HomePage: View {
                                     // EEE will return day as MON, TUE,...etc
                                     Text(taskViewModel.extractDate(date: day, format: "EEE"))
                                         .font(.system(size: 14))
+
+                                    Circle()
+                                        .fill(.white)
+                                        .frame(width: 8, height: 8)
+                                        .opacity(taskViewModel.isToday(date: day) ? 1 : 0)
                                 }
+                                .foregroundColor(.white)
+                                // MARK: Capsule Shape
+                                .frame(width: 45, height: 90)
+                                .background(
+
+                                    ZStack {
+
+                                        Capsule()
+                                            .fill(.black)
+                                    }
+                                )
                             }
                         }
                         .padding(.horizontal)

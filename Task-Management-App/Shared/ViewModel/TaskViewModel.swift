@@ -24,6 +24,8 @@ class TaskViewModel: ObservableObject {
     // MARK: Current Week Days
     @Published var currentWeekDays: [Date] = []
 
+    private let today = Date()
+
     // MARK: Initializing
     init() {
         getCurrentWeekDays()
@@ -53,5 +55,11 @@ class TaskViewModel: ObservableObject {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         return formatter.string(from: date)
+    }
+
+    // MARK: Checking if current Date is Today
+    func isToday(date: Date) -> Bool {
+        let calendar = Calendar.current
+        return calendar.isDate(today, inSameDayAs: date)
     }
 }
