@@ -20,4 +20,38 @@ class TaskViewModel: ObservableObject {
         Task(title: "Next Project", description: "Discuss team for the day", date: .init(timeIntervalSince1970: 1641677897)),
         Task(title: "App Proposal", description: "Discuss team for the day", date: .init(timeIntervalSince1970: 1641681497))
     ]
+
+    // MARK: Current Week Days
+    @Published var currentWeekDays: [Date] = []
+
+    // MARK: Initializing
+    init() {
+        getCurrentWeekDays()
+    }
+
+    func getCurrentWeekDays() {
+
+        let today = Date()
+        let calendar = Calendar.current
+
+        let week = calendar.dateInterval(of: .weekOfMonth, for: today)
+
+        guard let firstWeekDay = week?.start else {
+            return
+        }
+
+        (1...7).forEach { day in
+
+            if let weekDay = calendar.date(byAdding: .day, value: day, to: firstWeekDay) {
+                currentWeekDays.append(weekDay)
+            }
+        }
+    }
+
+    // MARK: Extracting Date
+    func extractDate(date: Date, format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: date)
+    }
 }

@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomePage: View {
+
+    @StateObject var taskViewModel: TaskViewModel = TaskViewModel()
+
     var body: some View {
 
         ScrollView(.vertical, showsIndicators: false) {
@@ -15,7 +18,31 @@ struct HomePage: View {
             // MARK: Lazy Stack With Pinned Header
             LazyVStack(spacing: 15, pinnedViews: [.sectionHeaders]) {
 
-                Section {} header: {
+                Section {
+
+                    // MARK: Current Week View
+                    ScrollView(.horizontal, showsIndicators: false) {
+
+                        HStack(spacing: 10) {
+
+                            ForEach(taskViewModel.currentWeekDays, id: \.self) { day in
+
+                                VStack(spacing: 10) {
+
+                                    Text(taskViewModel.extractDate(date: day, format: "dd"))
+                                        .font(.system(size: 15))
+                                        .fontWeight(.semibold)
+
+                                    // EEE will return day as MON, TUE,...etc
+                                    Text(taskViewModel.extractDate(date: day, format: "EEE"))
+                                        .font(.system(size: 14))
+                                }
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+
+                } header: {
                     HeaderView()
                 }
             }
