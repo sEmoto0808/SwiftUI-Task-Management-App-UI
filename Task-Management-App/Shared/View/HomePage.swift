@@ -11,6 +11,8 @@ struct HomePage: View {
 
     @StateObject var taskViewModel: TaskViewModel = TaskViewModel()
 
+    @Namespace var animation
+
     var body: some View {
 
         ScrollView(.vertical, showsIndicators: false) {
@@ -42,15 +44,21 @@ struct HomePage: View {
                                         .frame(width: 8, height: 8)
                                         .opacity(taskViewModel.isToday(date: day) ? 1 : 0)
                                 }
-                                .foregroundColor(.white)
+                                .foregroundStyle(taskViewModel.isToday(date: day) ? .primary : .tertiary)
+                                .foregroundColor(taskViewModel.isToday(date: day) ? .white : .black)
                                 // MARK: Capsule Shape
                                 .frame(width: 45, height: 90)
                                 .background(
 
                                     ZStack {
 
-                                        Capsule()
-                                            .fill(.black)
+                                        // MARK: Matched Geometry Effect
+                                        if taskViewModel.isToday(date: day) {
+
+                                            Capsule()
+                                                .fill(.black)
+                                                .matchedGeometryEffect(id: "CURRENTDAY", in: animation)
+                                        }
                                     }
                                 )
                             }
