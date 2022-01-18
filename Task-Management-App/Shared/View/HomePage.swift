@@ -135,6 +135,9 @@ struct HomePage: View {
                     .offset(y: 100)
             }
         }
+        .onChange(of: taskViewModel.currentDay) { newValue in
+            taskViewModel.filterTodayTasks()
+        }
     }
 
     // MARK: Task Card View

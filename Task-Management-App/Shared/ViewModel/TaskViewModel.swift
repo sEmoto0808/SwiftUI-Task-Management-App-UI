@@ -71,7 +71,7 @@ class TaskViewModel: ObservableObject {
         DispatchQueue.global(qos: .userInteractive).async {
             let calendar = Calendar.current
             let filteredTask = self.storedTasks.filter {
-                return calendar.isDate($0.date, inSameDayAs: Date())
+                return calendar.isDate($0.date, inSameDayAs: self.currentDay)
             }
 
             DispatchQueue.main.async {
