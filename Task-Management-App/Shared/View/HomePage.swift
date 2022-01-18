@@ -80,6 +80,7 @@ struct HomePage: View {
                 }
             }
         }
+        
     }
 
     // MARK: Header
@@ -135,6 +136,9 @@ struct HomePage: View {
                     .offset(y: 100)
             }
         }
+        .padding()
+        .padding(.top)
+        // MARK: Updating Tasks
         .onChange(of: taskViewModel.currentDay) { newValue in
             taskViewModel.filterTodayTasks()
         }
@@ -143,7 +147,7 @@ struct HomePage: View {
     // MARK: Task Card View
     func TaskCardView(task: Task) -> some View {
 
-        HStack {
+        HStack(alignment: .top, spacing: 30) {
 
             VStack(spacing: 10) {
 
@@ -156,8 +160,39 @@ struct HomePage: View {
                             .stroke(.black, lineWidth: 1)
                             .padding(-3)
                     )
+
+                Rectangle()
+                    .fill(.black)
+                    .frame(width: 3)
             }
+
+            VStack {
+
+                HStack(alignment: .top, spacing: 10) {
+
+                    VStack(alignment: .leading, spacing: 12) {
+
+                        Text(task.title)
+                            .font(.title2.bold())
+
+                        Text(task.description)
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                    }
+                    .hLeading()
+
+                    Text(task.date.formatted(date: .omitted, time: .shortened))
+                }
+            }
+            .foregroundColor(.white)
+            .padding()
+            .hLeading()
+            .background(
+                Color.black
+                    .cornerRadius(25)
+            )
         }
+        .hLeading()
     }
 }
 
