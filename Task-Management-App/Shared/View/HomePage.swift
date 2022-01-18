@@ -73,6 +73,8 @@ struct HomePage: View {
                         .padding(.horizontal)
                     }
 
+                    TasksView()
+
                 } header: {
                     HeaderView()
                 }
@@ -106,6 +108,53 @@ struct HomePage: View {
         }
         .padding()
         .background(Color.white)
+    }
+
+    // MARK: TasksView
+    func TasksView() -> some View {
+
+        LazyVStack(spacing: 18) {
+
+            if let tasks = taskViewModel.filteredTasks {
+
+                if tasks.isEmpty {
+
+                    Text("No tasks found!!!")
+                        .font(.system(size: 16))
+                        .fontWeight(.light)
+                        .offset(y: 100)
+                } else {
+
+                    ForEach(tasks) {task in
+                        TaskCardView(task: task)
+                    }
+                }
+            } else {
+
+                ProgressView()
+                    .offset(y: 100)
+            }
+        }
+    }
+
+    // MARK: Task Card View
+    func TaskCardView(task: Task) -> some View {
+
+        HStack {
+
+            VStack(spacing: 10) {
+
+                Circle()
+                    .fill(.black)
+                    .frame(width: 15, height: 15)
+                    .background(
+
+                        Circle()
+                            .stroke(.black, lineWidth: 1)
+                            .padding(-3)
+                    )
+            }
+        }
     }
 }
 
