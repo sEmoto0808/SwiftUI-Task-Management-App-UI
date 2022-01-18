@@ -80,7 +80,7 @@ struct HomePage: View {
                 }
             }
         }
-        
+        .ignoresSafeArea(.container, edges: .top)
     }
 
     // MARK: Header
@@ -108,6 +108,7 @@ struct HomePage: View {
             }
         }
         .padding()
+        .padding(.top, getSafeArea().top)
         .background(Color.white)
     }
 
@@ -218,5 +219,18 @@ extension View {
     func hCenter() -> some View {
         self
             .frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    //MARK: Safe Area
+    func getSafeArea() -> UIEdgeInsets {
+        guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            return .zero
+        }
+
+        guard let safeArea = screen.windows.first?.safeAreaInsets else {
+            return .zero
+        }
+
+        return safeArea
     }
 }
